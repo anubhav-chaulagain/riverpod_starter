@@ -2,10 +2,15 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_starter/models/employe_model.dart';
 import 'package:riverpod_starter/state/employe_state.dart';
 
+final employeViewModelProvider =
+    NotifierProvider<EmployeViewmodel, EmployeState>(() {
+      return EmployeViewmodel();
+    });
+
 class EmployeViewmodel extends Notifier<EmployeState> {
   @override
   EmployeState build() {
-    return EmployeState();
+    return EmployeState(isLoading: false, lstEmployes: []);
   }
 
   Future<void> addEmployes(EmployeeModel employe) async {

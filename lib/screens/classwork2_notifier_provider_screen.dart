@@ -1,10 +1,33 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riverpod_starter/models/employe_model.dart';
+import 'package:riverpod_starter/view_models/employe_viewmodel.dart';
 
-class Classwork2NotifierProviderScreen extends StatelessWidget {
+class Classwork2NotifierProviderScreen extends ConsumerStatefulWidget {
   const Classwork2NotifierProviderScreen({super.key});
 
   @override
+  ConsumerState<ConsumerStatefulWidget> createState() =>
+      _Classwork2NotifierProviderScreenState();
+}
+
+class _Classwork2NotifierProviderScreenState
+    extends ConsumerState<Classwork2NotifierProviderScreen> {
+  final fullnameController = TextEditingController(text: "Anubhav Chaulagain");
+  String? selectedGender;
+  String? selectedDepart;
+  final _formKey = GlobalKey<FormState>();
+
+  @override
+  void initState() {
+    super.initState();
+    selectedGender = "Male";
+    selectedDepart = "IT";
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final employeViewModel = ref.watch(employeViewModelProvider);
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
@@ -19,140 +42,185 @@ class Classwork2NotifierProviderScreen extends StatelessWidget {
           ),
         ),
         child: SafeArea(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: Row(
-                  children: [
-                    IconButton(
-                      onPressed: () => Navigator.pop(context),
-                      icon: const Icon(Icons.arrow_back, color: Colors.white),
-                    ),
-                    const SizedBox(width: 8),
-                    Text(
-                      'Classwork 2 - Notifier',
-                      style: Theme.of(context).textTheme.headlineSmall
-                          ?.copyWith(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                          ),
-                    ),
-                  ],
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: TextFormField(
-                  style: const TextStyle(color: Colors.white),
-                  decoration: InputDecoration(
-                    labelText: 'Full Name',
-                    labelStyle: const TextStyle(color: Colors.white70),
-                    hintText: 'Enter full name',
-                    hintStyle: const TextStyle(color: Colors.white38),
-                    filled: true,
-                    fillColor: Colors.white.withValues(alpha: 0.15),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                      borderSide: BorderSide.none,
-                    ),
-                    prefixIcon: const Icon(Icons.person, color: Colors.white70),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: Row(
+                    children: [
+                      IconButton(
+                        onPressed: () => Navigator.pop(context),
+                        icon: const Icon(Icons.arrow_back, color: Colors.white),
+                      ),
+                      const SizedBox(width: 8),
+                      Text(
+                        'Classwork 2 - Notifier',
+                        style: Theme.of(context).textTheme.headlineSmall
+                            ?.copyWith(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
+                      ),
+                    ],
                   ),
                 ),
-              ),
-              const SizedBox(height: 16),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: DropdownButtonFormField<String>(
-                  dropdownColor: Colors.deepPurple.shade700,
-                  style: const TextStyle(color: Colors.white),
-                  decoration: InputDecoration(
-                    labelText: 'Gender',
-                    labelStyle: const TextStyle(color: Colors.white70),
-                    filled: true,
-                    fillColor: Colors.white.withValues(alpha: 0.15),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                      borderSide: BorderSide.none,
-                    ),
-                    prefixIcon: const Icon(Icons.wc, color: Colors.white70),
-                  ),
-                  hint: const Text(
-                    'Select gender',
-                    style: TextStyle(color: Colors.white38),
-                  ),
-                  items: const [
-                    DropdownMenuItem(value: 'Male', child: Text('Male')),
-                    DropdownMenuItem(value: 'Female', child: Text('Female')),
-                    DropdownMenuItem(value: 'Other', child: Text('Other')),
-                  ],
-                  onChanged: (value) {},
-                ),
-              ),
-              const SizedBox(height: 16),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: DropdownButtonFormField<String>(
-                  dropdownColor: Colors.deepPurple.shade700,
-                  style: const TextStyle(color: Colors.white),
-                  decoration: InputDecoration(
-                    labelText: 'Department',
-                    labelStyle: const TextStyle(color: Colors.white70),
-                    filled: true,
-                    fillColor: Colors.white.withValues(alpha: 0.15),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                      borderSide: BorderSide.none,
-                    ),
-                    prefixIcon: const Icon(
-                      Icons.business,
-                      color: Colors.white70,
-                    ),
-                  ),
-                  hint: const Text(
-                    'Select department',
-                    style: TextStyle(color: Colors.white38),
-                  ),
-                  items: const [
-                    DropdownMenuItem(value: 'IT', child: Text('IT')),
-                    DropdownMenuItem(value: 'CS', child: Text('CS')),
-                    DropdownMenuItem(value: 'EC', child: Text('EC')),
-                    DropdownMenuItem(value: 'ME', child: Text('ME')),
-                    DropdownMenuItem(value: 'CE', child: Text('CE')),
-                  ],
-                  onChanged: (value) {},
-                ),
-              ),
-              const SizedBox(height: 32),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton.icon(
-                    onPressed: () {},
-                    icon: const Icon(Icons.person_add),
-                    label: const Text('Add Student'),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.green,
-                      foregroundColor: Colors.white,
-                      padding: const EdgeInsets.symmetric(vertical: 16),
-                      shape: RoundedRectangleBorder(
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  child: TextFormField(
+                    controller: fullnameController,
+                    style: const TextStyle(color: Colors.white),
+                    decoration: InputDecoration(
+                      labelText: 'Full Name',
+                      labelStyle: const TextStyle(color: Colors.white70),
+                      hintText: 'Enter full name',
+                      hintStyle: const TextStyle(color: Colors.white38),
+                      filled: true,
+                      fillColor: Colors.white.withValues(alpha: 0.15),
+                      border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12),
+                        borderSide: BorderSide.none,
+                      ),
+                      prefixIcon: const Icon(
+                        Icons.person,
+                        color: Colors.white70,
                       ),
                     ),
                   ),
                 ),
-              ),
-              const SizedBox(height: 32),
-              const Center(
-                child: Text(
-                  'No Data',
-                  style: TextStyle(color: Colors.white70, fontSize: 16),
+                const SizedBox(height: 16),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  child: DropdownButtonFormField<String>(
+                    dropdownColor: Colors.deepPurple.shade700,
+                    style: const TextStyle(color: Colors.white),
+                    decoration: InputDecoration(
+                      labelText: 'Gender',
+                      labelStyle: const TextStyle(color: Colors.white70),
+                      filled: true,
+                      fillColor: Colors.white.withValues(alpha: 0.15),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: BorderSide.none,
+                      ),
+                      prefixIcon: const Icon(Icons.wc, color: Colors.white70),
+                    ),
+                    hint: const Text(
+                      'Select gender',
+                      style: TextStyle(color: Colors.white38),
+                    ),
+                    items: const [
+                      DropdownMenuItem(value: 'Male', child: Text('Male')),
+                      DropdownMenuItem(value: 'Female', child: Text('Female')),
+                      DropdownMenuItem(value: 'Other', child: Text('Other')),
+                    ],
+                    onChanged: (value) {
+                      setState(() {
+                        selectedGender = value;
+                      });
+                    },
+                  ),
                 ),
-              ),
-              const Expanded(child: SizedBox()),
-            ],
+                const SizedBox(height: 16),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  child: DropdownButtonFormField<String>(
+                    dropdownColor: Colors.deepPurple.shade700,
+                    style: const TextStyle(color: Colors.white),
+                    decoration: InputDecoration(
+                      labelText: 'Department',
+                      labelStyle: const TextStyle(color: Colors.white70),
+                      filled: true,
+                      fillColor: Colors.white.withValues(alpha: 0.15),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: BorderSide.none,
+                      ),
+                      prefixIcon: const Icon(
+                        Icons.business,
+                        color: Colors.white70,
+                      ),
+                    ),
+                    hint: const Text(
+                      'Select department',
+                      style: TextStyle(color: Colors.white38),
+                    ),
+                    items: const [
+                      DropdownMenuItem(value: 'IT', child: Text('IT')),
+                      DropdownMenuItem(value: 'CS', child: Text('CS')),
+                      DropdownMenuItem(value: 'EC', child: Text('EC')),
+                      DropdownMenuItem(value: 'ME', child: Text('ME')),
+                      DropdownMenuItem(value: 'CE', child: Text('CE')),
+                    ],
+                    onChanged: (value) {
+                      setState(() {
+                        selectedDepart = value;
+                      });
+                    },
+                  ),
+                ),
+                const SizedBox(height: 32),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  child: SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton.icon(
+                      onPressed: () {
+                        if (_formKey.currentState!.validate()) {
+                          final employe = EmployeeModel(
+                            username: fullnameController.text,
+                            gender: selectedGender,
+                            department: selectedDepart,
+                          );
+                          ref
+                              .read(employeViewModelProvider.notifier)
+                              .addEmployes(employe);
+                        }
+                      },
+                      icon: const Icon(Icons.person_add),
+                      label: const Text('Add Student'),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.green,
+                        foregroundColor: Colors.white,
+                        padding: const EdgeInsets.symmetric(vertical: 16),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 32),
+                const Center(
+                  child: Text(
+                    'No Data',
+                    style: TextStyle(color: Colors.white70, fontSize: 16),
+                  ),
+                ),
+                const Expanded(child: SizedBox()),
+                employeViewModel.isLoading
+                    ? CircularProgressIndicator()
+                    : Expanded(
+                        child: ListView.builder(
+                          shrinkWrap: false,
+                          physics: NeverScrollableScrollPhysics(),
+                          itemCount: employeViewModel.lstEmployes.length,
+                          itemBuilder: (context, index) {
+                            final employe = employeViewModel.lstEmployes[index];
+                            return ListTile(
+                              title: Text(employe.username),
+                              subtitle: Text(
+                                employe.department ?? " Not Selected",
+                              ),
+                              trailing: Text(employe.gender ?? "Not Selected"),
+                            );
+                          },
+                        ),
+                      ),
+              ],
+            ),
           ),
         ),
       ),

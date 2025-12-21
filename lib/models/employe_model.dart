@@ -1,7 +1,7 @@
 class EmployeeModel {
   final String username;
-  final String gender;
-  final String department;
+  final String? gender;
+  final String? department;
 
   EmployeeModel({
     required this.username,
